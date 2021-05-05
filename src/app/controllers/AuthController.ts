@@ -55,17 +55,19 @@ class AuthController extends BaseController {
 
   private login = async (req: Request, res: Response, next: NextFunction) => {
     const { password } = req.body;
-
+    
     try {
       const where = req.body.username
         ? { username: req.body.username }
         : { email: req.body.email };
 
+      console.log("1. where",where, "ici")
+
       const user = await User.findOne({
         where,
         include: [{ model: Profile, as: 'profile' }],
       });
-
+      console.log("user", user)
       if (!user || !(user && (await bcrypt.compare(password, user.password)))) {
         return next(new HttpException(400, 'Username or password incorrect.'));
       }
@@ -73,6 +75,7 @@ class AuthController extends BaseController {
       user.password = null;
 
       const token = this.createToken(user.userId);
+      console.log(token)
       return res.json({
         status: 'ok',
         token,
@@ -123,7 +126,7 @@ class AuthController extends BaseController {
     }
   };
 
-  private reset = async (req: Request, res: Response, next: NextFunction) => {
+  private resetf = async (req: Request, res: Response, next: NextFunction) => {
     const { email } = req.body;
 
     try {

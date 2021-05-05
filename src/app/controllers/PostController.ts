@@ -93,7 +93,7 @@ class PostController extends BaseController {
           ],
         },
         where,
-        offset: (pg - 1) * this.pageSize,
+        offset: (/* parseInt(pg) */ - 1) * this.pageSize,
         limit: this.pageSize,
         include: [
           {

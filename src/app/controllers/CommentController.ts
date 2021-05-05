@@ -60,7 +60,7 @@ class CommentController extends BaseController {
           include: [{ as: 'profile', model: Profile }],
         }],
         order: [['commentId', 'desc']],
-        limit: page * 5,
+        limit: /* parseInt(page) *  */5,
       });
 
       const comments = rows.reverse();
